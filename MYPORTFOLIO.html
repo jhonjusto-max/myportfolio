@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhon Justo · design & dev portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0 1rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #764ba2;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about {
+            background: #f9f9f9;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: #2980b9;
+        }
+
+        /* Certificate Image Styling */
+        .about-image {
+            text-align: center;
+        }
+
+        .certificate-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .certificate-img:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Projects Section (main & more) */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            height: 250px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        /* subtle overlay hint */
+        .project-image::after {
+            content: "🔍";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .project-image:hover::after {
+            opacity: 1;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .project-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .project-links a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 500;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .project-links a:hover {
+            border-bottom-color: #3498db;
+        }
+
+        /* small "more projects" navigation */
+        .projects-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .projects-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            background: #f1f5f9;
+            color: #2c3e50;
+            transition: 0.2s;
+        }
+        .projects-nav a.active {
+            background: #3498db;
+            color: white;
+        }
+        .projects-nav a:hover {
+            background: #cbd5e1;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #f9f9f9;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            transition: color 0.3s, background 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .social-links a:hover {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        .nav-links a.active {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+        }
+
+        /* project page toggle */
+        .project-page {
+            display: none;
+        }
+        .project-page.active-page {
+            display: block;
+        }
+
+        /* ---------- LIGHTBOX (stays in website) ---------- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            background: transparent;
+            border: none;
+            line-height: 1;
+        }
+        .lightbox-close:hover {
+            color: #f00;
+        }
+        .lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #ccc;
+            font-size: 1.1rem;
+            padding: 0 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">JHONJUSTO</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Hi, I'm JHON JUSTO</h1>
+            <p>Web Developer & Graphic Designer</p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Hello! I'm a passionate web developer with experience in creating beautiful and functional websites. I love turning ideas into reality through code and design.</p>
+                    <p>With a background in both design and development, I bring a unique perspective to every project I work on. I'm constantly learning and exploring new technologies to stay at the forefront of web development and I'm the one who make this website.</p>
+                    <p>I'm also a passionate graphic designer with experience in creating visually stunning and meaningful designs. I love turning ideas into powerful visuals that communicate clearly and leave a lasting impression.</p>
+                    <p>I specialize in logo design and tarpaulin design, helping businesses build strong brand identities and eye-catching promotional materials. From clean and modern logos to bold and attractive tarpaulin layouts, I focus on combining creativity with clear communication.</p>
+                    <p>With a strong foundation in design principles and visual storytelling, I bring a unique perspective to every project I work on. I'm constantly learning new trends and tools to stay inspired and deliver fresh, professional, and impactful designs.</p>
+                    <div class="skills">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">Graphic Design</span>
+                        <span class="skill-tag">Logo Design</span>
+                        <span class="skill-tag">Tarpaulin Design</span>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <!-- Certificate Image from Metro Dumaguete College -->
+                    <img src="pp.jpg" 
+                         alt="Metro Dumaguete College Certificate of Completion" 
+                         class="certificate-img">
+                    <p class="image-caption">Metro Dumaguete College - Certificate of Completion</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section (with two sub-pages) -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            
+            <!-- navigation inside projects -->
+            <div class="projects-nav">
+                <a href="#" id="page1-link" class="active">main projects</a>
+                <a href="#" id="page2-link">more projects</a>
+            </div>
+
+            <!-- PAGE 1 - main projects (default visible) -->
+            <div id="project-page-1" class="project-page active-page">
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image" data-src="justoicecream ORIGINAL LOGO.jpg" data-title="Justo Ice Cream - Original Logo">
+                            <img src="justoicecream ORIGINAL LOGO.jpg" alt="Justo Ice Cream Original Logo">
+                        </div>
+                        <div class="project-info">
+                            <h3>Justo Ice Cream - Original Logo</h3>
+                            <p>Original logo design for Justo Ice Cream, featuring the classic brand identity with "JUSTO" text and establishment year 1976. A timeless design that represents the brand's heritage and quality.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="justoicecream ORIGINAL LOGO.jpg" data-title="Justo Ice Cream - Original Logo">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image" data-src="tarp.png" data-title="Justo Ice Cream Tarpaulin">
+                            <img src="tarp.png" alt="Justo Ice Cream Tarpaulin Design">
+                        </div>
+                        <div class="project-info">
+                            <h3>Justo Ice Cream Tarpaulin</h3>
+                            <p>Branding and tarpaulin design for Justo Ice Cream, featuring their logo, contact info (09556747542, 09535298976), and location at Upper Lukeright, Poblacion 2. Established since 1976.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="tarp.png" data-title="Justo Ice Cream Tarpaulin">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image" data-src="yumi birthday.jpg" data-title="Yumi - Happy Birthday Design">
+                            <img src="yumi birthday.jpg" alt="Yumi Happy Birthday Design">
+                        </div>
+                        <div class="project-info">
+                            <h3>Yumi - Happy Birthday Design</h3>
+                            <p>Creative birthday tarpaulin design featuring "Disney Happy Birthday Yumi" theme. A playful and colorful design perfect for celebrating special moments with a touch of Disney magic.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="yumi birthday.jpg" data-title="Yumi - Happy Birthday Design">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 2 - more projects (second page, hidden by default) -->
+            <div id="project-page-2" class="project-page">
+                <div class="projects-grid">
+                    <!-- additional project 1 -->
+                    <div class="project-card">
+                        <div class="project-image" data-src="originalxbanner.jpg" data-title="Summer Sale Tarpaulin">
+                            <img src="originalxbanner.jpg" alt="Summer Sale Tarpaulin">
+                        </div>
+                        <div class="project-info">
+                            <h3>Summer Sale Tarpaulin</h3>
+                            <p>Vibrant FOR X-BANNER tarpaulin for a seasonal sale event. Bold typography and fresh colors to attract customers – designed for a local brand.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="originalxbanner.jpg" data-title="Summer Sale Tarpaulin">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- additional project 2 -->
+                    <div class="project-card">
+                        <div class="project-image" data-src="paws and prose coffe shop.jpg" data-title="PAW AND PROSE Logo">
+                            <img src="paws and prose coffe shop.jpg" alt="Café Luna Logo">
+                        </div>
+                        <div class="project-info">
+                            <h3>PAW AND PROSE Logo</h3>
+                            <p>Elegant logo design for a specialty coffee shop. Combines a crescent moon and coffee bean, reflecting the brand's cozy, nocturnal atmosphere.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="paws and prose coffe shop.jpg" data-title="PAW AND PROSE Logo">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- additional project 3 -->
+                    <div class="project-card">
+                        <div class="project-image" data-src="UI JUSTO.jpg" data-title="ui/ex (Barrio Fiesta Banner)">
+                            <img src="UI JUSTO.jpg" alt="Barrio Fiesta Banner">
+                        </div>
+                        <div class="project-info">
+                            <h3>ui/ex</h3>
+                            <p>Large-format tarpaulin for a community fiesta. Includes event schedule, sponsors, and traditional Filipino ornamentation. Bright and festive layout.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="UI JUSTO.jpg" data-title="ui/ex (Barrio Fiesta Banner)">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- additional project 4 -->
+                    <div class="project-card">
+                        <div class="project-image" data-src="product JUSTO.jpg" data-title="product page (UI mockup)">
+                            <img src="product JUSTO.jpg" alt="Tech startup landing page">
+                        </div>
+                        <div class="project-info">
+                            <h3>product page</h3>
+                            <p>Modern one-pager design for a tech startup. Clean UI, gradient accents, and smooth sections – coded with HTML/CSS and basic JavaScript.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="product JUSTO.jpg" data-title="product page (UI mockup)">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- additional project 5 -->
+                    <div class="project-card">
+                        <div class="project-image" data-src="mdc rules.jpg" data-title="mdc rules (vintage style)">
+                            <img src="Intitutional Intructions.png" alt="Vintage barbershop logo">
+                        </div>
+                        <div class="project-info">
+                            <h3>Intitutional Intructions</h3>
+                            <p>Logo and signage design for a vintage barbershop. Hand-drawn lettering and classic razor illustration to evoke a retro masculine feel.</p>
+                            <div class="project-links">
+                                <a class="fake-link" data-src="Intitutional Intructions.png" data-title="Intitutional Intructions(vintage style)">🔍 view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>jhon.justo@mdci.edu.ph</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>(+63) 953 529 8976</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Dumaguete, Philippines</span>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/jhonjusto-max">GitHub</a>
+                    <a href="https://www.linkedin.com/in/jhon-justo-8796933b3/" target="_blank">LinkedIn</a>
+                    <a href="https://www.instagram.com/official_jhonjusto/">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Jhon Justo. All rights reserved.</p>
+    </footer>
+
+    <!-- LIGHTBOX (stays in website) -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        (function() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === "#") return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+
+            // Navbar background change on scroll
+            const nav = document.querySelector('nav');
+            function updateNavbar() {
+                if (window.scrollY > 100) {
+                    nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                    nav.style.backdropFilter = 'blur(5px)';
+                } else {
+                    nav.style.background = 'white';
+                    nav.style.backdropFilter = 'none';
+                }
+            }
+            window.addEventListener('scroll', updateNavbar);
+            updateNavbar();
+
+            // Active link highlighting
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            function setActiveLink() {
+                let current = '';
+                const scrollPos = window.scrollY;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 150;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                if (scrollPos < 100) current = 'home';
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const href = link.getAttribute('href').substring(1);
+                    if (href === current) {
+                        link.classList.add('active');
+                        link.style.color = '#3498db';
+                    } else {
+                        link.style.color = '#2c3e50';
+                    }
+                });
+            }
+            window.addEventListener('scroll', setActiveLink);
+            window.addEventListener('load', setActiveLink);
+
+            // ---------- PROJECT PAGE TOGGLE (main / more) ----------
+            const page1 = document.getElementById('project-page-1');
+            const page2 = document.getElementById('project-page-2');
+            const link1 = document.getElementById('page1-link');
+            const link2 = document.getElementById('page2-link');
+
+            function activatePage(pageToShow, activeLink) {
+                page1.classList.remove('active-page');
+                page2.classList.remove('active-page');
+                pageToShow.classList.add('active-page');
+                link1.classList.remove('active');
+                link2.classList.remove('active');
+                activeLink.classList.add('active');
+            }
+
+            link1.addEventListener('click', function(e) {
+                e.preventDefault();
+                activatePage(page1, link1);
+            });
+
+            link2.addEventListener('click', function(e) {
+                e.preventDefault();
+                activatePage(page2, link2);
+            });
+
+            // ---------- LIGHTBOX FUNCTIONALITY (stay in website) ----------
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeBtn = document.querySelector('.lightbox-close');
+
+            function openLightbox(src, title) {
+                lightboxImg.src = src;
+                lightboxCaption.textContent = title || '';
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // prevent scrolling
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                lightboxImg.src = '';
+                lightboxCaption.textContent = '';
+                document.body.style.overflow = '';
+            }
+
+            // click on project-image (the div)
+            document.querySelectorAll('.project-image').forEach(div => {
+                div.addEventListener('click', function(e) {
+                    const src = this.dataset.src; // from data-src
+                    const title = this.dataset.title || 'Project preview';
+                    if (src) openLightbox(src, title);
+                });
+            });
+
+            // click on fake-link inside project-links (like "View Design")
+            document.querySelectorAll('.fake-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const src = this.dataset.src;
+                    const title = this.dataset.title || 'Project preview';
+                    if (src) openLightbox(src, title);
+                });
+            });
+
+            // close events
+            closeBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
+            });
+
+            // image error fallback (soft placeholder)
+            const imgs = document.querySelectorAll('img');
+            imgs.forEach(img => {
+                img.onerror = function() {
+                    if (!this.src.includes('placeholder')) {
+                        this.style.background = '#e0f2fe';
+                        this.style.padding = '2rem 1rem';
+                        this.style.objectFit = 'contain';
+                        this.style.fontSize = '0.9rem';
+                        this.alt = this.alt + ' (illustrative)';
+                    }
+                };
+            });
+        })();
+    </script>
+</body>
+</html>
