@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jhon Justo · design & dev portfolio</title>
+    <title>Jhon Justo · click & play + fullscreen video</title>
     <style>
         * {
             margin: 0;
@@ -17,7 +17,6 @@
             color: #333;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -61,7 +60,6 @@
             color: #3498db;
         }
 
-        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -99,7 +97,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Sections */
         section {
             padding: 5rem 2rem;
         }
@@ -116,7 +113,6 @@
             margin: 0 auto;
         }
 
-        /* About Section */
         .about {
             background: #f9f9f9;
         }
@@ -152,7 +148,6 @@
             background: #2980b9;
         }
 
-        /* Certificate Image Styling */
         .about-image {
             text-align: center;
         }
@@ -175,7 +170,6 @@
             color: #666;
         }
 
-        /* Achievements Section with viewable pictures */
         .achievements {
             background: #fff;
         }
@@ -205,7 +199,6 @@
             font-size: 2.8rem;
             margin-bottom: 0.75rem;
         }
-        /* achievement image styling (clickable) */
         .achievement-thumb {
             width: 100%;
             height: 160px;
@@ -244,7 +237,6 @@
             font-size: 0.8rem;
             align-self: center;
         }
-        /* hint overlay (magnifying) only on achievement images */
         .thumb-wrapper {
             position: relative;
             display: block;
@@ -271,7 +263,7 @@
             opacity: 1;
         }
 
-        /* Projects Section (main & more) */
+        /* Projects grid */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -317,7 +309,6 @@
             transform: scale(1.05);
         }
 
-        /* subtle overlay hint */
         .project-image::after {
             content: "🔍";
             position: absolute;
@@ -379,22 +370,24 @@
             border-bottom-color: #3498db;
         }
 
-        /* small "more projects" navigation */
+        /* Project navigation */
         .projects-nav {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
         .projects-nav a {
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.2rem;
-            padding: 0.5rem 1.5rem;
+            font-size: 1.1rem;
+            padding: 0.5rem 1.8rem;
             border-radius: 40px;
             background: #f1f5f9;
             color: #2c3e50;
             transition: 0.2s;
+            white-space: nowrap;
         }
         .projects-nav a.active {
             background: #3498db;
@@ -404,7 +397,6 @@
             background: #cbd5e1;
         }
 
-        /* Contact Section */
         .contact {
             background: #f9f9f9;
         }
@@ -451,7 +443,6 @@
             background: rgba(52, 152, 219, 0.1);
         }
 
-        /* Footer */
         footer {
             background: #2c3e50;
             color: white;
@@ -459,7 +450,6 @@
             padding: 2rem;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -484,6 +474,13 @@
             .achievements-grid {
                 grid-template-columns: 1fr;
             }
+            .projects-nav {
+                gap: 0.8rem;
+            }
+            .projects-nav a {
+                font-size: 1rem;
+                padding: 0.5rem 1.2rem;
+            }
         }
 
         .nav-links a.active {
@@ -491,7 +488,6 @@
             border-bottom: 2px solid #3498db;
         }
 
-        /* project page toggle */
         .project-page {
             display: none;
         }
@@ -499,56 +495,140 @@
             display: block;
         }
 
-        /* LIGHTBOX (shared) */
+        /* ========== VIDEO STYLES (with fullscreen button) ========== */
+        .video-wrapper {
+            width: 100%;
+            height: 250px;
+            background: #0f172a;
+            position: relative;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+        }
+        
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* custom play button overlay (only when video is paused) */
+        .custom-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            transition: all 0.2s;
+            pointer-events: none;
+            border: 2px solid rgba(255,255,255,0.5);
+            opacity: 1;
+        }
+        
+        .video-wrapper:hover .custom-play-btn {
+            background: rgba(52, 152, 219, 0.8);
+            transform: translate(-50%, -50%) scale(1.1);
+            width: 80px;
+            height: 80px;
+            font-size: 3rem;
+        }
+        
+        /* hide play button when video is playing */
+        .video-wrapper.playing .custom-play-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* fullscreen button (bottom right inside video) */
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: background 0.2s;
+        }
+        
+        .fullscreen-btn:hover {
+            background: #3498db;
+        }
+        
+        .video-info {
+            padding: 0.5rem 1rem;
+            background: #1e293b;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .video-info span {
+            background: #3498db;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        /* video card adjustment */
+        .video-card .project-image {
+            display: none;
+        }
+
+        /* lightbox remains for images only */
         .lightbox {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0,0,0,0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
         }
         .lightbox.active {
             display: flex;
         }
         .lightbox img {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
+            max-width: 90%;
+            max-height: 80vh;
             border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .lightbox-close {
+        .close-lightbox {
             position: absolute;
             top: 30px;
             right: 40px;
             font-size: 3rem;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
-            background: transparent;
-            border: none;
-            line-height: 1;
-        }
-        .lightbox-close:hover {
-            color: #f00;
-        }
-        .lightbox-caption {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            color: #ccc;
-            font-size: 1.1rem;
-            padding: 0 2rem;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <div class="logo">JHONJUSTO</div>
@@ -562,16 +642,14 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Hi, I'm JHON JUSTO</h1>
-            <p>Web Developer & Graphic Designer</p>
+            <p>Web Developer & Graphic Designer & Video Editor</p>
             <a href="#projects" class="cta-button">View My Work</a>
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
@@ -588,35 +666,29 @@
                         <span class="skill-tag">Graphic Design</span>
                         <span class="skill-tag">Logo Design</span>
                         <span class="skill-tag">Tarpaulin Design</span>
+                        <span class="skill-tag">Video Editing</span>
                     </div>
                 </div>
                 <div class="about-image">
-                    <!-- Certificate Image from Metro Dumaguete College -->
-                    <img src="pp.jpg" 
-                         alt="Metro Dumaguete College Certificate of Completion" 
-                         class="certificate-img">
+                    <img src="pp.jpg" alt="Metro Dumaguete College Certificate of Completion" class="certificate-img">
                     <p class="image-caption">Metro Dumaguete College - Certificate of Completion</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ACHIEVEMENTS SECTION with viewable pictures -->
     <section id="achievements" class="achievements">
         <div class="container">
             <h2 class="section-title">🏆 Achievements</h2>
             <div class="achievements-grid">
-                <!-- achievement 1 with image -->
                 <div class="achievement-card">
                     <div class="achievement-icon">📋</div>
                     <h3>CERTIFICATE OF COMPLETION</h3>
-                    <!-- clickable achievement image (wrapped for hint) -->
                     <span class="thumb-wrapper">
                         <img src="2.png" alt="Best in Web Design certificate" class="achievement-thumb" data-src="2.png" data-title="Best in Web Design · Metro Dumaguete College" loading="lazy">
                     </span>
                     <span class="achievement-date">June 3 2025</span>
                 </div>
-                <!-- achievement 2 with image -->
                 <div class="achievement-card">
                     <div class="achievement-icon">📋</div>
                     <h3>CERTIFICATE OF COMPLETION</h3>
@@ -625,7 +697,6 @@
                     </span>
                     <span class="achievement-date">June 3 2025</span>
                 </div>
-                <!-- achievement 3 with image -->
                 <div class="achievement-card">
                     <div class="achievement-icon">📋</div>
                     <h3>CERTIFICATE OF COMPLETION</h3>
@@ -634,7 +705,6 @@
                     </span>
                     <span class="achievement-date">June 3 2025</span>
                 </div>
-                <!-- achievement 4 with image -->
                 <div class="achievement-card">
                     <div class="achievement-icon">📋</div>
                     <h3>CERTIFICATE OF COMPLETION</h3>
@@ -647,7 +717,7 @@
                     <div class="achievement-icon">📋</div>
                     <h3>CERTIFICATE OF COMPLETION</h3>
                     <span class="thumb-wrapper">
-                        <img src="6.jpg" alt="TESDA NC III certificate" class="achievement-thumb" data-src="6.jpg" data-title="Certified Graphic Designer · TESDA NC III" loading="lazy">
+                        <img src="6.jpg" alt="Video Editing Workshop" class="achievement-thumb" data-src="6.jpg" data-title="Advanced Video Editing Workshop · Dumaguete" loading="lazy">
                     </span>
                     <span class="achievement-date">June 7 2025</span>
                 </div>
@@ -655,7 +725,7 @@
         </div>
     </section>
 
-    <!-- Projects Section (two sub-pages) -->
+    <!-- PROJECTS SECTION WITH FULLSCREEN VIDEOS -->
     <section id="projects">
         <div class="container">
             <h2 class="section-title">My Projects</h2>
@@ -663,109 +733,166 @@
             <div class="projects-nav">
                 <a href="#" id="page1-link" class="active">main projects</a>
                 <a href="#" id="page2-link">more projects</a>
+                <a href="#" id="page3-link">video projects</a>
             </div>
 
-            <!-- PAGE 1 - main projects -->
+            <!-- PAGE 1 - main projects (images) -->
             <div id="project-page-1" class="project-page active-page">
                 <div class="projects-grid">
                     <div class="project-card">
-                        <div class="project-image" data-src="justoicecream ORIGINAL LOGO.jpg" data-title="Justo Ice Cream - Original Logo">
+                        <div class="project-image" data-src="justoicecream ORIGINAL LOGO.jpg">
                             <img src="justoicecream ORIGINAL LOGO.jpg" alt="Justo Ice Cream Original Logo">
                         </div>
                         <div class="project-info">
                             <h3>Justo Ice Cream - Original Logo</h3>
                             <p>Original logo design for Justo Ice Cream, featuring the classic brand identity with "JUSTO" text and establishment year 1976.</p>
                             <div class="project-links">
-                                <a class="fake-link" data-src="justoicecream ORIGINAL LOGO.jpg" data-title="Justo Ice Cream - Original Logo">🔍 view</a>
+                                <a class="fake-link" data-src="justoicecream ORIGINAL LOGO.jpg">🔍 view</a>
                             </div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-image" data-src="tarp.png" data-title="Justo Ice Cream Tarpaulin">
+                        <div class="project-image" data-src="tarp.png">
                             <img src="tarp.png" alt="Justo Ice Cream Tarpaulin Design">
                         </div>
                         <div class="project-info">
                             <h3>Justo Ice Cream Tarpaulin</h3>
                             <p>Branding and tarpaulin design for Justo Ice Cream, featuring contact info and location. Established since 1976.</p>
                             <div class="project-links">
-                                <a class="fake-link" data-src="tarp.png" data-title="Justo Ice Cream Tarpaulin">🔍 view</a>
+                                <a class="fake-link" data-src="tarp.png">🔍 view</a>
                             </div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-image" data-src="yumi birthday.jpg" data-title="Yumi - Happy Birthday Design">
+                        <div class="project-image" data-src="yumi birthday.jpg">
                             <img src="yumi birthday.jpg" alt="Yumi Happy Birthday Design">
                         </div>
                         <div class="project-info">
                             <h3>Yumi - Happy Birthday Design</h3>
                             <p>Creative birthday tarpaulin design featuring "Disney Happy Birthday Yumi" theme. Playful and colorful.</p>
                             <div class="project-links">
-                                <a class="fake-link" data-src="yumi birthday.jpg" data-title="Yumi - Happy Birthday Design">🔍 view</a>
+                                <a class="fake-link" data-src="yumi birthday.jpg">🔍 view</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PAGE 2 - more projects -->
+            <!-- PAGE 2 - more projects (images) -->
             <div id="project-page-2" class="project-page">
                 <div class="projects-grid">
                     <div class="project-card">
-                        <div class="project-image" data-src="originalxbanner.jpg" data-title="Summer Sale Tarpaulin">
+                        <div class="project-image" data-src="originalxbanner.jpg">
                             <img src="originalxbanner.jpg" alt="Summer Sale Tarpaulin">
                         </div>
                         <div class="project-info">
                             <h3>Summer Sale Tarpaulin</h3>
                             <p>Vibrant X-banner for seasonal sale. Bold typography and fresh colors.</p>
-                            <div class="project-links"><a class="fake-link" data-src="originalxbanner.jpg" data-title="Summer Sale Tarpaulin">🔍 view</a></div>
+                            <div class="project-links"><a class="fake-link" data-src="originalxbanner.jpg">🔍 view</a></div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-image" data-src="paws and prose coffe shop.jpg" data-title="PAW AND PROSE Logo">
+                        <div class="project-image" data-src="paws and prose coffe shop.jpg">
                             <img src="paws and prose coffe shop.jpg" alt="PAW AND PROSE Logo">
                         </div>
                         <div class="project-info">
                             <h3>PAW AND PROSE Logo</h3>
                             <p>Elegant logo for a coffee shop, combining moon and coffee bean.</p>
-                            <div class="project-links"><a class="fake-link" data-src="paws and prose coffe shop.jpg" data-title="PAW AND PROSE Logo">🔍 view</a></div>
+                            <div class="project-links"><a class="fake-link" data-src="paws and prose coffe shop.jpg">🔍 view</a></div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-image" data-src="UI JUSTO.jpg" data-title="ui/ex (Barrio Fiesta Banner)">
+                        <div class="project-image" data-src="UI JUSTO.jpg">
                             <img src="UI JUSTO.jpg" alt="Barrio Fiesta Banner">
                         </div>
                         <div class="project-info">
                             <h3>ui/ex</h3>
                             <p>Large-format tarpaulin for a community fiesta with schedule and sponsors.</p>
-                            <div class="project-links"><a class="fake-link" data-src="UI JUSTO.jpg" data-title="ui/ex (Barrio Fiesta Banner)">🔍 view</a></div>
+                            <div class="project-links"><a class="fake-link" data-src="UI JUSTO.jpg">🔍 view</a></div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-image" data-src="product JUSTO.jpg" data-title="product page (UI mockup)">
+                        <div class="project-image" data-src="product JUSTO.jpg">
                             <img src="product JUSTO.jpg" alt="product page UI">
                         </div>
                         <div class="project-info">
                             <h3>product page</h3>
                             <p>Modern one-pager design for a tech startup. Clean UI and smooth sections.</p>
-                            <div class="project-links"><a class="fake-link" data-src="product JUSTO.jpg" data-title="product page (UI mockup)">🔍 view</a></div>
+                            <div class="project-links"><a class="fake-link" data-src="product JUSTO.jpg">🔍 view</a></div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-image" data-src="Intitutional Intructions.png" data-title="Institutional Instructions (vintage style)">
+                        <div class="project-image" data-src="Intitutional Intructions.png">
                             <img src="Intitutional Intructions.png" alt="vintage barbershop logo">
                         </div>
                         <div class="project-info">
                             <h3>Institutional Instructions</h3>
                             <p>Logo and signage for a vintage barbershop. Hand-drawn lettering.</p>
-                            <div class="project-links"><a class="fake-link" data-src="Intitutional Intructions.png" data-title="Institutional Instructions (vintage)">🔍 view</a></div>
+                            <div class="project-links"><a class="fake-link" data-src="Intitutional Intructions.png">🔍 view</a></div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- PAGE 3 - VIDEO PROJECTS (with fullscreen button) -->
+            <div id="project-page-3" class="project-page">
+                <div class="projects-grid">
+                    <!-- Video 1 - Barrio Fiesta -->
+                    <div class="project-card video-card">
+                        <div class="video-wrapper" id="video1">
+                            <video src="robotica.mp4" loop playsinline></video>
+                            <div class="custom-play-btn">▶</div>
+                            <button class="fullscreen-btn" onclick="enterFullscreen('video1')">⛶ Fullscreen</button>
+                        </div>
+                        <div class="video-info">
+                            <span>🎬ROBOTICS </span>
+                            <span style="margin-left:auto;">1:24</span>
+                        </div>
+                        <div class="project-info">
+                            <h3>ROBOTICS FILM TRAILER</h3>
+                            <p>An official Trailer Of robotics 2026.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Video 2 - Ice Cream TVC -->
+                    <div class="project-card video-card">
+                        <div class="video-wrapper" id="video2">
+                            <video src="asin.mp4" loop playsinline></video>
+                            <div class="custom-play-btn">▶</div>
+                            <button class="fullscreen-btn" onclick="enterFullscreen('video2')">⛶ Fullscreen</button>
+                        </div>
+                        <div class="video-info">
+                            <span>📺 ASIN</span>
+                            <span style="margin-left:auto;">0:30</span>
+                        </div>
+                        <div class="project-info">
+                            <h3>ASIN</h3>
+                            <p>CINEMA DASIG 2023 TRAILER</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Video 3 - MDCI Promo -->
+                    <div class="project-card video-card">
+                        <div class="video-wrapper" id="video3">
+                            <video src="deadline.mp4" loop playsinline></video>
+                            <div class="custom-play-btn">▶</div>
+                            <button class="fullscreen-btn" onclick="enterFullscreen('video3')">⛶ Fullscreen</button>
+                        </div>
+                        <div class="video-info">
+                            <span>🎥 DEADLINE</span>
+                            <span style="margin-left:auto;">2:05</span>
+                        </div>
+                        <div class="project-info">
+                            <h3>DEADLINE</h3>
+                            <p>A 2023 short HORROR film.</p>
+                        </div>
+                    </div>
+                </div>
+                <p style="text-align:center; margin-top:2rem; font-style:italic; color:#555;">👇 Click video to play/pause • Click fullscreen button for fullscreen view</p>
+            </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
@@ -784,21 +911,19 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2025 Jhon Justo. All rights reserved.</p>
     </footer>
 
-    <!-- LIGHTBOX (shared) -->
+    <!-- Lightbox for images -->
     <div id="lightbox" class="lightbox">
-        <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img" src="" alt="">
-        <div class="lightbox-caption" id="lightbox-caption"></div>
+        <span class="close-lightbox" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</span>
+        <img id="lightbox-img" src="">
     </div>
 
     <script>
         (function() {
-            // Smooth scrolling for navigation links
+            // Smooth scrolling
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -812,7 +937,7 @@
                 });
             });
 
-            // Navbar background change on scroll
+            // Navbar scroll effect
             const nav = document.querySelector('nav');
             function updateNavbar() {
                 if (window.scrollY > 100) {
@@ -858,83 +983,79 @@
             // Project page toggle
             const page1 = document.getElementById('project-page-1');
             const page2 = document.getElementById('project-page-2');
+            const page3 = document.getElementById('project-page-3');
             const link1 = document.getElementById('page1-link');
             const link2 = document.getElementById('page2-link');
+            const link3 = document.getElementById('page3-link');
+            
             function activatePage(pageToShow, activeLink) {
-                page1.classList.remove('active-page');
-                page2.classList.remove('active-page');
+                [page1, page2, page3].forEach(p => p.classList.remove('active-page'));
                 pageToShow.classList.add('active-page');
-                link1.classList.remove('active');
-                link2.classList.remove('active');
+                [link1, link2, link3].forEach(l => l.classList.remove('active'));
                 activeLink.classList.add('active');
             }
+            
             link1.addEventListener('click', function(e) { e.preventDefault(); activatePage(page1, link1); });
             link2.addEventListener('click', function(e) { e.preventDefault(); activatePage(page2, link2); });
+            link3.addEventListener('click', function(e) { e.preventDefault(); activatePage(page3, link3); });
 
-            // LIGHTBOX (unified)
+            // Lightbox for images
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxCaption = document.getElementById('lightbox-caption');
-            const closeBtn = document.querySelector('.lightbox-close');
-
-            function openLightbox(src, title) {
-                lightboxImg.src = src;
-                lightboxCaption.textContent = title || '';
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                lightboxImg.src = '';
-                lightboxCaption.textContent = '';
-                document.body.style.overflow = '';
-            }
-
-            // Add click listeners to ALL images that have data-src (achievement thumbs and project images)
-            document.querySelectorAll('.project-image, .achievement-thumb').forEach(el => {
+            
+            document.querySelectorAll('.project-image, .achievement-thumb, .fake-link').forEach(el => {
                 el.addEventListener('click', function(e) {
-                    // for .project-image we use its dataset; for thumb it's directly on img
-                    let src = this.dataset.src || this.src;  // thumb has data-src, fallback to src
-                    let title = this.dataset.title || (this.alt || 'View image');
-                    // If clicked element is inside .project-image, we already have dataset on parent? but we attach to .project-image too.
-                    // handle both: if this is .project-image, it has dataset.src
-                    if (this.classList.contains('project-image')) {
-                        src = this.dataset.src;
-                        title = this.dataset.title || 'Project preview';
-                    }
-                    if (src) openLightbox(src, title);
-                });
-            });
-
-            // fake-link inside project cards
-            document.querySelectorAll('.fake-link').forEach(link => {
-                link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const src = this.dataset.src;
-                    const title = this.dataset.title || 'Project preview';
-                    if (src) openLightbox(src, title);
+                    let src = this.dataset.src || (this.tagName === 'IMG' ? this.src : null);
+                    if (!src && this.classList.contains('fake-link')) src = this.dataset.src;
+                    if (src) {
+                        lightboxImg.src = src;
+                        lightbox.classList.add('active');
+                    }
                 });
             });
-
-            closeBtn.addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+            
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) lightbox.classList.remove('active');
             });
 
-            // image error fallback
-            const imgs = document.querySelectorAll('img');
-            imgs.forEach(img => {
-                img.onerror = function() {
-                    if (!this.src.includes('placeholder')) {
-                        this.style.background = '#e0f2fe';
-                        this.style.padding = '2rem 1rem';
-                        this.style.objectFit = 'contain';
-                        this.alt = this.alt + ' (illustrative)';
+            // Video play/pause and fullscreen
+            // Add click listeners to video wrappers
+            document.querySelectorAll('.video-wrapper').forEach(wrapper => {
+                const video = wrapper.querySelector('video');
+                const playBtn = wrapper.querySelector('.custom-play-btn');
+                
+                // Play/pause on wrapper click (but not if clicking fullscreen button)
+                wrapper.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('fullscreen-btn')) return;
+                    
+                    if (video.paused) {
+                        video.play();
+                        wrapper.classList.add('playing');
+                    } else {
+                        video.pause();
+                        wrapper.classList.remove('playing');
                     }
-                };
+                });
+                
+                // Update play button when video pauses/plays externally
+                video.addEventListener('play', () => wrapper.classList.add('playing'));
+                video.addEventListener('pause', () => wrapper.classList.remove('playing'));
             });
         })();
+
+        // Fullscreen function (called from button)
+        function enterFullscreen(wrapperId) {
+            const wrapper = document.getElementById(wrapperId);
+            const video = wrapper.querySelector('video');
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+        }
     </script>
 </body>
 </html>
